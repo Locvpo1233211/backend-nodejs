@@ -5,7 +5,7 @@ require("dotenv").config();
 const port = 3000;
 const path = require("path");
 
-console.log(process.env.HOST_NAME);
+console.log(process.env.PORT);
 
 app.set("views", path.join(__dirname, "views"));
 
