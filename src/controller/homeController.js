@@ -15,4 +15,8 @@ const index = (req, res) => {
     });
 };
 
-module.exports = { hoidi, index };
+const home = (req, res) => {
+    res.render("home.ejs");
+};
+
+module.exports = { hoidi, index, home };
