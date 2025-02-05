@@ -19,4 +19,10 @@ const home = (req, res) => {
     res.render("home.ejs");
 };
 
-module.exports = { hoidi, index, home };
+const addNewUser = (req, res) => {
+    console.log(">>>>req", req.body);
+
+    res.send("Add new user");
+};
+
+module.exports = { hoidi, index, home, addNewUser };

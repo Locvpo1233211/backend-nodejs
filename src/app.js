@@ -9,7 +9,7 @@ const webRoute = require("./route/web");
 const connection = require("./config/database");
 configViewEngine(app);
 
-app.use("/test123", webRoute);
+app.use("/", webRoute);
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);

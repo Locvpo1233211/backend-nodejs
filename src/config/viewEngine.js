@@ -6,6 +6,8 @@ const configViewEngine = (app) => {
     app.set("view engine", "ejs");
     // config static file
     app.use(express.static(path.join("./src", "public")));
+    app.use(express.json());
+    app.use(express.urlencoded({ extended: true }));
 };
 
 module.exports = configViewEngine;
