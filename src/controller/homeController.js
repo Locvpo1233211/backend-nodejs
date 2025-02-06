@@ -21,8 +21,20 @@ const home = (req, res) => {
 
 const addNewUser = (req, res) => {
     console.log(">>>>req", req.body);
-
-    res.send("Add new user");
+    let { email, name, city } = req.body;
+    console.log(">>>>email", email, ">>>>name", name, ">>>>city", city);
+    connection.query(
+        `INSERT INTO Users (email, name, city) VALUES ('${email}', '${name}', '${city}');`,
+        function (err, results, fields) {
+            if (err) {
+                console.log(">>>>err", err);
+                res.send("Add new user failed");
+            } else {
+                console.log(">>>>results", results);
+                res.send("Add new user successfully");
+            }
+        }
+    );
 };
 
 module.exports = { hoidi, index, home, addNewUser };
