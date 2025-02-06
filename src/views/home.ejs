@@ -34,6 +34,8 @@
             <a href="/create">CREATE</a>
         </div>
 
+        <%= JSON.stringify(listUsers) %>
+
         <table>
             <thead>
                 <tr>
@@ -41,22 +43,22 @@
                     <th>Gmail</th>
                     <th>Tên</th>
                     <th>Thành phố</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
+                <% listUsers.forEach(function(user) { %>
                 <tr>
-                    <td>1</td>
-                    <td>user1@gmail.com</td>
-                    <td>Nguyễn Văn A</td>
-                    <td>Hà Nội</td>
+                    <td><%= user.id %></td>
+                    <td>u<%= user.email %></td>
+                    <td><%= user.name %></td>
+                    <td><%= user.city %></td>
+                    <td>
+                        <button>Edit</button>
+                        <button>Delete</button>
+                    </td>
                 </tr>
-                <tr>
-                    <td>2</td>
-                    <td>user2@gmail.com</td>
-                    <td>Trần Thị B</td>
-                    <td>TP. Hồ Chí Minh</td>
-                </tr>
-                <!-- Thêm các dòng khác tương tự -->
+                <% }) %>
             </tbody>
         </table>
     </body>
