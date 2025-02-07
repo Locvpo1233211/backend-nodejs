@@ -23,6 +23,10 @@ const getCreatePage = (req, res) => {
     res.render("create.ejs");
 };
 
+const getUpdatePage = (req, res) => {
+    res.render("eidt.ejs");
+};
+
 const addNewUser = async (req, res) => {
     console.log(">>>>req", req.body);
     let { email, name, city } = req.body;
@@ -35,4 +39,11 @@ const addNewUser = async (req, res) => {
     res.send("Add new user successfully");
 };
 
-module.exports = { hoidi, index, home, addNewUser, getCreatePage };
+module.exports = {
+    hoidi,
+    index,
+    home,
+    addNewUser,
+    getCreatePage,
+    getUpdatePage,
+};
