@@ -1,6 +1,6 @@
 const { json } = require("express");
 const connection = require("../config/database");
-const { getAllUsers } = require("../service/CRUDService");
+const { getAllUsers, getUserById } = require("../service/CRUDService");
 const hoidi = (req, res) => {
     res.render("sampple.ejs");
 };
@@ -23,8 +23,10 @@ const getCreatePage = (req, res) => {
     res.render("create.ejs");
 };
 
-const getUpdatePage = (req, res) => {
-    res.render("eidt.ejs");
+const getUpdatePage = async (req, res) => {
+    let userId = req.params.id;
+    let user = await getUserById(userId);
+    res.render("edit.ejs", { userEdit: user });
 };
 
 const addNewUser = async (req, res) => {
