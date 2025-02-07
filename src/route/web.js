@@ -7,6 +7,7 @@ const {
     addNewUser,
     getCreatePage,
     getUpdatePage,
+    postUpdateUser,
 } = require("../controller/homeController");
 
 // khai bao route
@@ -17,5 +18,6 @@ router.get("/", home);
 router.get("/create", getCreatePage);
 router.get("/update/:id", getUpdatePage);
 router.post("/create-user", addNewUser);
+router.post("/update-user", postUpdateUser);
 
 module.exports = router;

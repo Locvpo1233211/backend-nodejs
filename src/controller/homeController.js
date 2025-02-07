@@ -1,6 +1,10 @@
 const { json } = require("express");
 const connection = require("../config/database");
-const { getAllUsers, getUserById } = require("../service/CRUDService");
+const {
+    getAllUsers,
+    getUserById,
+    updateUserById,
+} = require("../service/CRUDService");
 const hoidi = (req, res) => {
     res.render("sampple.ejs");
 };
@@ -32,13 +36,21 @@ const getUpdatePage = async (req, res) => {
 const addNewUser = async (req, res) => {
     console.log(">>>>req", req.body);
     let { email, name, city } = req.body;
-    console.log(">>>>email", email, ">>>>name", name, ">>>>city", city);
 
     let [results, fields] = await connection.query(
         `INSERT INTO Users (email, name, city) VALUES ('${email}', '${name}', '${city}');`
     );
-    console.log(">>>>results", results);
     res.send("Add new user successfully");
+};
+
+const postUpdateUser = async (req, res) => {
+    let { email, name, id, city } = req.body;
+    let [results, fields] = await connection.query(
+        `UPDATE Users SET email = '${email}', name = '${name}', city = '${city}' WHERE id = ${id};`
+    );
+
+    await updateUserById(id, email, name, city);
+    res.redirect("/");
 };
 
 module.exports = {
@@ -48,4 +60,5 @@ module.exports = {
     addNewUser,
     getCreatePage,
     getUpdatePage,
+    postUpdateUser,
 };
