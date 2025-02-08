@@ -1,0 +1,65 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link rel="stylesheet" href="/css/style.css" />
+        <style>
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin: 50px auto;
+            }
+
+            th,
+            td {
+                padding: 12px;
+                text-align: left;
+                border-bottom: 1px solid #ddd;
+            }
+
+            th {
+                background-color: #f2f2f2;
+                color: black;
+            }
+
+            tr:hover {
+                background-color: #f5f5f5;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="topnav">
+            <a class="active" href="/">Home</a>
+            <a href="/create">CREATE</a>
+        </div>
+
+        <%= JSON.stringify(listUsers) %>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Gmail</th>
+                    <th>Tên</th>
+                    <th>Thành phố</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% listUsers.forEach(function(user) { %>
+                <tr>
+                    <td><%= user.id %></td>
+                    <td><%= user.email %></td>
+                    <td><%= user.name %></td>
+                    <td><%= user.city %></td>
+                    <td>
+                        <a href="/update/<%= user.id %>">Edit</a>
+                        <button>Delete</button>
+                    </td>
+                </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </body>
+</html>
