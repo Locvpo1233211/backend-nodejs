@@ -8,8 +8,8 @@ const webRoute = require("./route/web");
 // Get the client
 const connection = require("./config/database");
 configViewEngine(app);
-
 app.use("/", webRoute);
+connection();
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
