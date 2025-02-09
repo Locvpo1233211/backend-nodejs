@@ -22,7 +22,8 @@ const index = (req, res) => {
 };
 
 const home = async (req, res) => {
-    let results = [];
+    let results = await User.find({});
+    console.log(">>>>results", results);
     res.render("home.ejs", { listUsers: results });
 };
 const getCreatePage = (req, res) => {
