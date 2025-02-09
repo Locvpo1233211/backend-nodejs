@@ -8,13 +8,10 @@ const webRoute = require("./route/web");
 // Get the client
 const connection = require("./config/database");
 const mongoose = require("mongoose");
-const Kitten = require("./model/Kitten");
 
 configViewEngine(app);
 app.use("/", webRoute);
 
-const cat = new Kitten({ name: "hoidan it2" });
-cat.save();
 (async () => {
     try {
         await connection();

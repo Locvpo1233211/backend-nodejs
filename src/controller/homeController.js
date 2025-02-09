@@ -5,6 +5,8 @@ const {
     getUserById,
     updateUserById,
 } = require("../service/CRUDService");
+
+const User = require("../model/user");
 const hoidi = (req, res) => {
     res.render("sampple.ejs");
 };
@@ -20,7 +22,7 @@ const index = (req, res) => {
 };
 
 const home = async (req, res) => {
-    let results = await getAllUsers();
+    let results = [];
     res.render("home.ejs", { listUsers: results });
 };
 const getCreatePage = (req, res) => {
@@ -36,10 +38,7 @@ const getUpdatePage = async (req, res) => {
 const addNewUser = async (req, res) => {
     console.log(">>>>req", req.body);
     let { email, name, city } = req.body;
-
-    let [results, fields] = await connection.query(
-        `INSERT INTO Users (email, name, city) VALUES ('${email}', '${name}', '${city}');`
-    );
+    User.create({ email, name, city });
     res.send("Add new user successfully");
 };
 
