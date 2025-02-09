@@ -9,8 +9,14 @@ const webRoute = require("./route/web");
 const connection = require("./config/database");
 configViewEngine(app);
 app.use("/", webRoute);
-connection();
 
-app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`);
-});
+(async () => {
+    try {
+        await connection();
+        app.listen(port, () => {
+            console.log(`Example app listening on port ${port}`);
+        });
+    } catch (error) {
+        console.log("Connect to MongoDB failed");
+    }
+})();

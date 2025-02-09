@@ -48,14 +48,17 @@ const dbState = [
 ];
 
 const connection = async () => {
-    try {
-        await mongoose.connect("mongodb://root:123456@localhost:27017");
-        console.log("Connect to MongoDB successfully");
-        const state = Number(mongoose.connection.readyState);
-        console.log(dbState.find((f) => f.value == state).label, "to db"); // connected to db
-    } catch (error) {
-        console.log("Connect to MongoDB failure");
-    }
+    const option = {
+        user: process.env.DB_USER,
+        pass: process.env.DB_PASSWORD,
+        dbName: process.env.DB_NAME,
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    };
+    await mongoose.connect(process.env.DB_HOST, option);
+    console.log("Connect to MongoDB successfully");
+    const state = Number(mongoose.connection.readyState);
+    console.log(dbState.find((f) => f.value == state).label, "to db"); // connected to db
 };
 
 module.exports = connection;
