@@ -7,6 +7,7 @@ const {
 } = require("../service/CRUDService");
 
 const User = require("../model/user");
+const { get } = require("mongoose");
 const hoidi = (req, res) => {
     res.render("sampple.ejs");
 };
@@ -32,7 +33,7 @@ const getCreatePage = (req, res) => {
 
 const getUpdatePage = async (req, res) => {
     let userId = req.params.id;
-    let user = await getUserById(userId);
+    let user = await User.findById(userId);
     res.render("edit.ejs", { userEdit: user });
 };
 
@@ -45,14 +46,25 @@ const addNewUser = async (req, res) => {
 
 const postUpdateUser = async (req, res) => {
     let { email, name, id, city } = req.body;
-    let [results, fields] = await connection.query(
-        `UPDATE Users SET email = '${email}', name = '${name}', city = '${city}' WHERE id = ${id};`
-    );
+    // let [results, fields] = await connection.query(
+    //     `UPDATE Users SET email = '${email}', name = '${name}', city = '${city}' WHERE id = ${id};`
+    // );
 
-    await updateUserById(id, email, name, city);
+    // await updateUserById(id, email, name, city);
+    await User.updateOne({ _id: id }, { email, name, city });
     res.redirect("/");
 };
+const getDeleteUser = async (req, res) => {
+    let userId = req.params.id;
+    let user = await User.findById(userId);
 
+    res.render("delete.ejs", { user });
+};
+const postDeleteUser = async (req, res) => {
+    let userId = req.body.id;
+    await User.deleteOne({ _id: userId });
+    res.redirect("/");
+};
 module.exports = {
     hoidi,
     index,
@@ -61,4 +73,6 @@ module.exports = {
     getCreatePage,
     getUpdatePage,
     postUpdateUser,
+    getDeleteUser,
+    postDeleteUser,
 };
