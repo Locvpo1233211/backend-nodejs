@@ -5,13 +5,14 @@ const path = require("path");
 const port = process.env.PORT || 3000;
 const configViewEngine = require("./config/viewEngine");
 const webRoute = require("./route/web");
+const apiRoute = require("./route/api");
 // Get the client
 const connection = require("./config/database");
 const mongoose = require("mongoose");
 
 configViewEngine(app);
 app.use("/", webRoute);
-
+app.use("/v1/api", apiRoute);
 (async () => {
     try {
         await connection();
