@@ -1,6 +1,9 @@
 const User = require("../model/user");
 const path = require("path");
-const { uploadSingleFileAPI } = require("../service/fileService");
+const {
+    uploadSingleFileAPI,
+    uploadMultiFileAPI,
+} = require("../service/fileService");
 const getUsersAPI = async (req, res) => {
     let results = await User.find({});
 
@@ -41,26 +44,52 @@ const deleteUserAPI = async (req, res) => {
 
 const postUploadSingleFileAPI = async (req, res) => {
     let sampleFile = req.files.image;
-    console.log(">>>>sampleFile", sampleFile);
-    sampleFile.forEach(async (element) => {
-        // sampleFile processing logic here
-        if (!req.files || Object.keys(req.files).length === 0) {
-            res.status(400).send("No files were uploaded.");
-            return;
-        }
+    // sampleFile processing logic here
+    if (!req.files || Object.keys(req.files).length === 0) {
+        res.status(400).send("No files were uploaded.");
+        return;
+    }
 
-        let result = await uploadSingleFileAPI(element);
-    });
+    let result = await uploadSingleFileAPI(sampleFile);
     if (result.status === "failed") {
         return res.status(500).json({
             errorCode: 1,
             message: "Upload file failed",
+            data: result.error,
         });
     }
     return res.status(200).json({
         errorCode: 0,
         message: "Upload file successfully",
+        data: result,
     });
+};
+const postUploadmultiFileAPI = async (req, res) => {
+    let sampleFile = req.files.image;
+    console.log(">>>>sampleFile", sampleFile);
+    // sampleFile processing logic here
+    if (!req.files || Object.keys(req.files).length === 0) {
+        res.status(400).send("No files were uploaded.");
+        return;
+    }
+
+    if (Array.isArray(sampleFile)) {
+        let result = await uploadMultiFileAPI(sampleFile);
+        console.log(">>>>result", result);
+        if (result.status === "failed") {
+            return res.status(500).json({
+                errorCode: 1,
+                message: "Upload file failed",
+            });
+        }
+        return res.status(200).json({
+            errorCode: 0,
+            message: "Upload file successfully",
+            data: result,
+        });
+    } else {
+        postUploadSingleFileAPI(req, res);
+    }
 };
 module.exports = {
     getUsersAPI,
@@ -68,4 +97,5 @@ module.exports = {
     putUpdateUserAPI,
     deleteUserAPI,
     postUploadSingleFileAPI,
+    postUploadmultiFileAPI,
 };
