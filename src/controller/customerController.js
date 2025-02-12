@@ -1,17 +1,15 @@
 const { uploadSingleFileAPI } = require("../service/fileService");
-const { createCustomerService } = require("../service/customerService");
+const {
+    createCustomerService,
+    createArrayCustomerService,
+} = require("../service/customerService");
 module.exports = {
     postCreateCustomerAPI: async (req, res) => {
-        // // name: { String, required: true },
-        // address: String,
-        // phone: String,
-        // email: String,
-        // image: String,
-        // description: String,
-        let { name, address, phone, email, image, description } = req.body;
+        let { name, address, phone, email, description } = req.body;
         let imgUrl = "";
 
         let sampleFile = req.files.image;
+        console.log(">>>>sampleFile", sampleFile);
         // sampleFile processing logic here
         if (!req.files || Object.keys(req.files).length === 0) {
         } else {
@@ -34,9 +32,34 @@ module.exports = {
         // return res.status(201).json({
         //     errorCode: 0,
         //     data: customer,
-        return res.status(201).json({
-            errorCode: 0,
-            data: result,
-        });
+        if (result) {
+            return res.status(201).json({
+                errorCode: 0,
+                data: result,
+            });
+        } else {
+            return res.status(500).json({
+                errorCode: 1,
+                message: "Create customer failed",
+                data: result,
+            });
+        }
+    },
+
+    postCreateArrayCustomer: async (req, res) => {
+        let customers = await createArrayCustomerService(req.body.customer);
+        console.log(">>>>customers", customers);
+        if (customers) {
+            return res.status(201).json({
+                errorCode: 0,
+                data: customers,
+            });
+        } else {
+            return res.status(500).json({
+                errorCode: 1,
+                message: "Create customer failed",
+                data: customers,
+            });
+        }
     },
 };
