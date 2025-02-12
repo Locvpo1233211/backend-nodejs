@@ -13,7 +13,10 @@ const {
 const {
     postCreateCustomerAPI,
     postCreateArrayCustomer,
+    getAllCustomerAPI,
+    updateCustomerAPI,
 } = require("../controller/customerController");
+const { update } = require("../model/customer");
 //
 routerApi.get("/users", getUsersAPI);
 routerApi.post("/users", postCreateUserAPI);
@@ -27,6 +30,8 @@ routerApi.post("/files", postUploadmultiFileAPI);
 //  custom route
 routerApi.post("/customers", postCreateCustomerAPI);
 routerApi.post("/customers-many", postCreateArrayCustomer);
+routerApi.get("/customers", getAllCustomerAPI);
+routerApi.put("/customers", updateCustomerAPI);
 
 //
 routerApi.get("/", (req, res) => {
