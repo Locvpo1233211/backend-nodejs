@@ -7,6 +7,7 @@ const {
     deleteCustomerService,
     deleteArrayCustomerService,
 } = require("../service/customerService");
+const aqp = require("api-query-params");
 module.exports = {
     postCreateCustomerAPI: async (req, res) => {
         let { name, address, phone, email, description } = req.body;
@@ -67,13 +68,10 @@ module.exports = {
         }
     },
     getAllCustomerAPI: async (req, res) => {
-        console.log(">>>>getAllCustomerAPI:", req.query);
-        let limit = req.query.limit;
-        let page = req.query.page;
-        let name = req.query.name;
+        const queryString = aqp(req.query);
         let result = null;
-        if (limit && page) {
-            result = await getAllCustomerservice(limit, page, name);
+        if (queryString.limit || queryString.skip) {
+            result = await getAllCustomerservice(queryString);
         } else {
             result = await getAllCustomerservice();
         }
@@ -92,11 +90,12 @@ module.exports = {
     },
     updateCustomerAPI: async (req, res) => {
         let { name, address, phone, email, description, id } = req.body;
+        console.log(">>>>req.body", req.body);
         let imgUrl = "";
-        let sampleFile = req.files.image;
         if (!req.files || Object.keys(req.files).length === 0) {
+            console.log("No file uploaded");
         } else {
-            result = await uploadSingleFileAPI(sampleFile);
+            result = await uploadSingleFileAPI(req.files.image);
             imgUrl = result.path;
         }
         let customerData = {

@@ -1,5 +1,6 @@
 const { getAllCustomerAPI } = require("../controller/customerController");
 const Customer = require("../model/customer");
+const aqp = require("api-query-params");
 
 module.exports = {
     createCustomerService: async (customerData) => {
@@ -31,20 +32,19 @@ module.exports = {
             return null;
         }
     },
-    getAllCustomerservice: async (limit, page, name) => {
+    getAllCustomerservice: async (queryString) => {
         try {
+            console.log(">>>>queryString", queryString);
             let customers = null;
-            if (limit && page) {
-                let offset = (page - 1) * limit;
-                customers = await Customer.find({})
-                    .skip(offset)
-                    .limit(limit)
+            if (queryString) {
+                customers = await Customer.find(queryString.filter)
+                    .skip(queryString.skip)
+                    .limit(queryString.limit)
                     .exec();
             } else {
                 customers = await Customer.find({}).exec();
             }
 
-            console.log(">>>>customers", customers);
             return customers;
         } catch (error) {
             console.log(">>>>errosr", error);
@@ -53,6 +53,7 @@ module.exports = {
     },
     updateCustomerService: async (customerData) => {
         try {
+            console.log(">>>>customerData", customerData);
             let result = await Customer.updateOne(
                 { _id: customerData.id },
                 {
