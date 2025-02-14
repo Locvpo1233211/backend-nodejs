@@ -31,9 +31,19 @@ module.exports = {
             return null;
         }
     },
-    getAllCustomerservice: async () => {
+    getAllCustomerservice: async (limit, page, name) => {
         try {
-            let customers = await Customer.find({});
+            let customers = null;
+            if (limit && page) {
+                let offset = (page - 1) * limit;
+                customers = await Customer.find({})
+                    .skip(offset)
+                    .limit(limit)
+                    .exec();
+            } else {
+                customers = await Customer.find({}).exec();
+            }
+
             console.log(">>>>customers", customers);
             return customers;
         } catch (error) {
