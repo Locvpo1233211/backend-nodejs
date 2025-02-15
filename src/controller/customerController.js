@@ -6,6 +6,7 @@ const {
     updateCustomerService,
     deleteCustomerService,
     deleteArrayCustomerService,
+    deleteAllCustomerService,
 } = require("../service/customerService");
 const aqp = require("api-query-params");
 module.exports = {
@@ -146,6 +147,21 @@ module.exports = {
             return res.status(500).json({
                 errorCode: 1,
                 message: "Delete customer failed",
+                data: result,
+            });
+        }
+        return res.status(200).json({
+            errorCode: 0,
+            data: result,
+        });
+    },
+
+    xxxxx: async (req, res) => {
+        let result = await deleteAllCustomerService();
+        if (!result) {
+            return res.status(500).json({
+                errorCode: 1,
+                message: "Delete all customer failed",
                 data: result,
             });
         }

@@ -94,4 +94,13 @@ module.exports = {
             return null;
         }
     },
+    deleteAllCustomerService: async () => {
+        try {
+            let result = await Customer.deleteMany({});
+            return result;
+        } catch (error) {
+            console.log(">>>>errosr", error);
+            return null;
+        }
+    },
 };
