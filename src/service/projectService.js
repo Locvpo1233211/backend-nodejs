@@ -18,6 +18,16 @@ module.exports = {
                 }
                 result = project;
             }
+            if (data.type === "REMOVE MEMBER") {
+                let project = await Project.findById(data.projectId);
+                for (let i = 0; i < data.userId.length; i++) {
+                    if (project.members.includes(data.userId[i])) {
+                        project.members.pull(data.userId[i]);
+                        await project.save();
+                    }
+                }
+                result = project;
+            }
 
             return result;
         } catch (error) {
@@ -39,6 +49,34 @@ module.exports = {
                 .populate(population)
                 .exec();
             console.log(">>>>result", population);
+            return result;
+        } catch (error) {
+            console.log(">>>>errosr", error);
+            return null;
+        }
+    },
+    deleteAProjectService: async (data) => {
+        try {
+            console.log(">>>>data", data);
+            let result = await Project.deleteById(data);
+            return result;
+        } catch (error) {
+            console.log(">>>>errosr", error);
+            return null;
+        }
+    },
+    updateProjectService: async (data) => {
+        try {
+            console.log(">>>>data", data);
+            let result = await Project.updateOne(
+                { _id: data.id },
+                {
+                    name: data.name,
+                    startDate: data.startDate,
+                    endDate: data.endDate,
+                    description: data.description,
+                }
+            );
             return result;
         } catch (error) {
             console.log(">>>>errosr", error);

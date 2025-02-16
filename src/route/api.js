@@ -22,6 +22,8 @@ const {
 const {
     postCreateProjectAPI,
     getAllProjectAPI,
+    updateProjectAPI,
+    deleteAProjectAPI,
 } = require("../controller/projectController");
 const { update } = require("../model/customer");
 //
@@ -47,6 +49,8 @@ routerApi.delete("/all-customers", xxxxx);
 
 routerApi.post("/projects", postCreateProjectAPI);
 routerApi.get("/projects", getAllProjectAPI);
+routerApi.delete("/projects", deleteAProjectAPI);
+routerApi.put("/projects", updateProjectAPI);
 
 //
 http: routerApi.get("/", (req, res) => {
