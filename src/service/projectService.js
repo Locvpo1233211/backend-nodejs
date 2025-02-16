@@ -29,6 +29,17 @@ module.exports = {
                 result = project;
             }
 
+            if (data.type === "ADD TASK") {
+                let project = await Project.findById(data.projectId);
+                for (let i = 0; i < data.taskId.length; i++) {
+                    if (!project.task.includes(data.taskId[i])) {
+                        project.task.push(data.taskId[i]);
+                        await project.save();
+                    }
+                }
+                result = project;
+            }
+
             return result;
         } catch (error) {
             console.log(">>>>errosr", error);

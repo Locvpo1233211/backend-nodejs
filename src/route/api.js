@@ -25,6 +25,12 @@ const {
     updateProjectAPI,
     deleteAProjectAPI,
 } = require("../controller/projectController");
+const {
+    postCreateTasksAPI,
+    getAllTaskAPI,
+    deleteTaskAPI,
+    updateTaskAPI,
+} = require("../controller/taskController");
 const { update } = require("../model/customer");
 //
 routerApi.get("/users", getUsersAPI);
@@ -51,6 +57,13 @@ routerApi.post("/projects", postCreateProjectAPI);
 routerApi.get("/projects", getAllProjectAPI);
 routerApi.delete("/projects", deleteAProjectAPI);
 routerApi.put("/projects", updateProjectAPI);
+
+// TAsKS route
+
+routerApi.post("/tasks", postCreateTasksAPI);
+routerApi.get("/tasks", getAllTaskAPI);
+routerApi.delete("/tasks", deleteTaskAPI);
+routerApi.put("/tasks", updateTaskAPI);
 
 //
 http: routerApi.get("/", (req, res) => {

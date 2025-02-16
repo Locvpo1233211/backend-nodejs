@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const mongoose_delete = require("mongoose-delete");
 const userSchema = new mongoose.Schema({
     name: String,
     email: String,
